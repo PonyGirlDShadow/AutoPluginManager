@@ -42,7 +42,7 @@ export async function getVencordDir() {
 export async function getGithubToken() {
     if (storageMap.has(githubTokenVar)) return;
     return new Promise<void>(resolve =>
-        ask('Please provide Github API token (get one here: https://github.com/settings/tokens/new?description=Download%20Vencord%20plugins&scopes=repo): ', (answer: string) => {
+        ask('Please provide Github API token (get one here: https://github.com/settings/tokens/new?description=Download%20Vencord%20plugins&scopes=public_repo): ', (answer: string) => {
             if (!answer.startsWith("ghp_") || answer.length != 40) {
                 console.log('Please provide correct token!');
                 process.exit();
@@ -60,6 +60,7 @@ export async function getGithubToken() {
 
 export function ask(question: string, callback: Function) {
     const rl = createInterface({
+        terminal: true,
         input: process.stdin,
         output: process.stdout
     });

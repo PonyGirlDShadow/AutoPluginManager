@@ -35,7 +35,6 @@ export function loadStorage() {
 
     }
     catch (ex) {
-        console.error("Error parsing storage file!\n", ex);
         resetStorage();
     }
 }

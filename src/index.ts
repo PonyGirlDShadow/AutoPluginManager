@@ -4,7 +4,6 @@ import { getFromLink } from "@github";
 import { addPlugin, loadStorage, removePlugin, resetStorage, saveStorage, storageMap } from "@storage";
 import { validateLink } from "@utils";
 import { Command } from "commander"; // add this line
-import figlet from "figlet";
 import { rmSync } from "fs";
 import { join } from "path";
 
@@ -125,5 +124,4 @@ function hasPlugin(name: string) {
 }
 
 loadStorage();
-console.log(figlet.textSync("PluginManager"));
 program.parse(Bun.argv);
