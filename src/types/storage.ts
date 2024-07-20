@@ -1,0 +1,1 @@
+export type TStorage = Record<string, string | string[]>;
