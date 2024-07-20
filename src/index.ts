@@ -44,7 +44,7 @@ const loadCommand = program.command("install")
             console.log(pluginName + "\nRead more... (Plugin name too long)");
             return;
         }
-        if (hasPlugin(pluginName)) {
+        if (hasPlugin(pluginName, true)) {
             console.log("Plugin with same name already exists!");
             return;
         }
@@ -107,17 +107,17 @@ const setCommand = program.command("set")
         storageMap.set(name, link);
         saveStorage();
     });
-function checkPluginList() {
+function checkPluginList(silent: boolean = false) {
     if (!storageMap.has(allPluginsVar)) {
-        console.error("No plugins installed!");
+        if (!silent) console.error("No plugins installed!");
         return false;
     }
     return true;
 }
-function hasPlugin(name: string) {
-    if (!checkPluginList()) return false;
+function hasPlugin(name: string, silent: boolean = false) {
+    if (!checkPluginList(silent)) return false;
     if (!(storageMap.get(allPluginsVar) as string[]).includes(name)) {
-        console.error("No plugin with name " + name);
+        if (!silent) console.error("No plugin with name " + name);
         return false;
     }
     return true;

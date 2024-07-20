@@ -57,14 +57,13 @@ export async function getGithubToken() {
 }
 
 
-
 export function ask(question: string, callback: Function) {
+
     const rl = createInterface({
         terminal: true,
         input: process.stdin,
         output: process.stdout
     });
-
     rl.question(question, (answer) => {
         callback(answer);
         rl.close();

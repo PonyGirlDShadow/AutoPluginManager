@@ -3,7 +3,7 @@ function AppData() {
 }
 import { allPluginsVar } from "@constants";
 import type { TStorage } from "@types";
-import { existsSync, mkdirSync, readFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 const appDir = join(AppData(), "VencordPluginManager");
 const storageFile = join(appDir, "storage.json");
@@ -24,6 +24,7 @@ export function loadStorage() {
     checkAppDir();
     try {
         if (!existsSync(storageFile)) {
+            console.log("Storage not found. Resetting...");
             resetStorage();
             return;
         }
@@ -35,16 +36,21 @@ export function loadStorage() {
 
     }
     catch (ex) {
+        console.log("Exception loading storage. Resetting...");
         resetStorage();
     }
 }
 export function saveStorage() {
     checkAppDir();
-    const obj: TStorage = {};
-    for (const entry of storageMap.entries()) {
-        obj[entry[0]] = entry[1];
+    let content = "{}";
+    if (storageMap.size != 0) {
+        const obj: TStorage = {};
+        for (const entry of storageMap.entries()) {
+            obj[entry[0]] = entry[1];
+        }
+        content = JSON.stringify(obj, null, 4);
     }
-    Bun.write(storageFile, JSON.stringify(obj, null, 4));
+    writeFileSync(storageFile, content);
 }
 
 
