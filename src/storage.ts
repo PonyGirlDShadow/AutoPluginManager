@@ -32,9 +32,11 @@ export function loadStorage() {
         for (const key of Object.keys(obj)) {
             storageMap.set(key, obj[key]!);
         }
+
     }
     catch (ex) {
-        console.error("Error parsing storage file!", ex);
+        console.error("Error parsing storage file!\n", ex);
+        resetStorage();
     }
 }
 export function saveStorage() {
